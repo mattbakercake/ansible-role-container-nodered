@@ -1,0 +1,3 @@
+timezone: Europe/London
+docker_dir: /usr/local/sbin/docker
+docker_compose_dir: /usr/local/sbin/docker/compose
