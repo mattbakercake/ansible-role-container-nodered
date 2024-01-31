@@ -5,7 +5,7 @@
     dest: "{{ docker_compose_dir }}/compose.nodered.yaml"
 
 - name: Create nodered persistant data dir
-  become: yes
+  become: true
   ansible.builtin.file:
     path: "{{ docker_dir }}/nodered/data"
     state: directory
@@ -14,12 +14,13 @@
     mode: '0755'
 
 - name: Ensure Node.js and npm are installed.
-  become: yes
+  become: true
   apt:
     name: "nodejs"
     state: present
 
 - name: Install homeassistant websocket node.js package
+  become: true
   npm:
     name: node-red-contrib-home-assistant-websocket
     global: yes
