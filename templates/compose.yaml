@@ -1,0 +1,16 @@
+services:
+  node-red:
+    container_name: nodered
+    image: nodered/node-red:latest
+    ports:
+      - "1880:1880"
+    networks:
+      - node-red-net
+    volumes:
+      - "{{ docker_dir }}/nodered/data:/data"
+    environment:
+      - TZ={{ timezone }}
+    restart: always
+
+networks:
+  node-red-net:

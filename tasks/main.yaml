@@ -1,0 +1,36 @@
+- name: Copy the compose file
+  become: true
+  template:
+    src: templates/compose.yaml
+    dest: "{{ docker_compose_dir }}/compose.nodered.yaml"
+
+- name: Create nodered persistant data dir
+  become: yes
+  ansible.builtin.file:
+    path: "{{ docker_dir }}/nodered/data"
+    state: directory
+    owner: '1000'
+    group: '1000'
+    mode: '0755'
+
+- name: Ensure Node.js and npm are installed.
+  become: yes
+  apt:
+    name: "nodejs"
+    state: present
+
+- name: Install homeassistant websocket node.js package
+  npm:
+    name: node-red-contrib-home-assistant-websocket
+    global: yes
+
+- name: Get nodered container info
+  become: true
+  docker_container_info:
+    name: nodered
+  register: nodered_container
+
+- name: Docker-compose up
+  become: true
+  ansible.builtin.command: "docker compose -f {{ docker_compose_dir }}/compose.nodered.yaml up --detach"
+  when: nodered_container.container['State']['Running'] == false
