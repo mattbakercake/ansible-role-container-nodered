@@ -16,12 +16,12 @@
 - name: Ensure Node.js and npm are installed.
   become: true
   apt:
-    name: "nodejs"
+    name: nodejs
     state: present
 
 - name: Install homeassistant websocket node.js package
   become: true
-  npm:
+  community.general.npm:
     name: node-red-contrib-home-assistant-websocket
     global: yes
 
