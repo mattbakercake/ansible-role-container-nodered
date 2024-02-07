@@ -16,7 +16,9 @@
 - name: Ensure Node.js and npm are installed.
   become: true
   apt:
-    name: nodejs
+    name: 
+    - nodejs
+    - npm
     state: present
 
 - name: Install homeassistant websocket node.js package
@@ -34,4 +36,4 @@
 - name: Docker-compose up
   become: true
   ansible.builtin.command: "docker compose -f {{ docker_compose_dir }}/compose.nodered.yaml up --detach"
-  when: nodered_container.container['State']['Running'] == false
+  when: nodered_container.container['State'] is not defined or nodered_container.container['State']['Running'] == false
