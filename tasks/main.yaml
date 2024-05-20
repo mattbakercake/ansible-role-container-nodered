@@ -31,9 +31,7 @@
   become: true
   docker_container_info:
     name: nodered
-  register: nodered_container
+  notify: start nodered
 
-- name: Docker-compose up
-  become: true
-  ansible.builtin.command: "docker compose -f {{ docker_compose_dir }}/compose.nodered.yaml up"
-  when: nodered_container.container['State'] is not defined or nodered_container.container['State']['Running'] == false
+- name: Flush handlers #force preceeding handler to run immediately
+  meta: flush_handlers
