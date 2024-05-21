@@ -1,9 +1,17 @@
+- name: Ensure Node.js and npm are installed.
+  become: true
+  apt:
+    name: 
+    - nodejs
+    - npm
+    state: present
+
 - name: Install homeassistant websocket node.js package
   become: true
   community.general.npm:
     name: node-red-contrib-home-assistant-websocket
     global: yes
-    
+
 - name: Create nodered persistant data dir
   become: true
   ansible.builtin.file:
@@ -22,11 +30,3 @@
 
 - name: Flush handlers #force preceeding handler to run immediately
   meta: flush_handlers
-
-- name: Ensure Node.js and npm are installed.
-  become: true
-  apt:
-    name: 
-    - nodejs
-    - npm
-    state: present
