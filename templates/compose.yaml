@@ -1,3 +1,4 @@
+name: nodered
 services:
   node-red:
     container_name: nodered

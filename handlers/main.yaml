@@ -1,6 +1,7 @@
 - name: start nodered
   become: true
   community.docker.docker_compose_v2:
+    project_name: "nodered"
     project_src: "{{ docker_compose_dir }}"
     files:
     - compose.nodered.yaml
@@ -8,6 +9,7 @@
 - name: restart nodered
   become: true
   community.docker.docker_compose_v2:
+    project_name: "nodered"
     project_src: "{{ docker_compose_dir }}"
     files:
     - compose.nodered.yaml
